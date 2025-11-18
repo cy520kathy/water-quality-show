@@ -1,6 +1,3 @@
-# =========================
-# 导入必要的库
-# =========================
 import warnings
 import tempfile
 import base64
@@ -15,16 +12,14 @@ import seaborn as sns
 
 warnings.filterwarnings('ignore')
 
-# =========================
-# 完全兼容的字体配置 - 适用于Streamlit Cloud
-# =========================
+
 def setup_font():
-    """配置字体支持 - 完全兼容Streamlit Cloud"""
+    
     try:
-        # 清除所有字体缓存
+        
         matplotlib.font_manager._rebuild()
         
-        # 使用最基本的字体设置
+        
         plt.rcParams.update({
             'font.family': 'sans-serif',
             'font.sans-serif': ['DejaVu Sans', 'Arial', 'Liberation Sans', 'sans-serif'],
@@ -38,15 +33,12 @@ def setup_font():
         })
         return True
     except:
-        # 如果字体设置失败，使用默认设置
+        
         return False
 
-# 初始化字体
+
 setup_font()
 
-# =========================
-# 功能展示主程序
-# =========================
 
 def main():
     st.set_page_config(
@@ -59,10 +51,10 @@ def main():
     st.title("🌊 Microbial Water Quality Prediction System")
     st.markdown("---")
 
-    # 侧边栏功能选择
+    
     st.sidebar.header("🔧 Function Modules")
 
-    # 功能选择按钮
+  
     if st.sidebar.button("📈 Temporal Analysis", use_container_width=True):
         st.session_state.current_function = "Temporal Analysis"
     
@@ -81,14 +73,14 @@ def main():
     if st.sidebar.button("📊 Risk Trend Analysis", use_container_width=True):
         st.session_state.current_function = "Risk Trend Analysis"
 
-    # 初始化会话状态
+   
     if 'current_function' not in st.session_state:
         st.session_state.current_function = "Temporal Analysis"
 
-    # 显示当前功能说明
+    
     st.header(f"📋 {st.session_state.current_function} Demo")
 
-    # 各功能模块的展示内容
+   
     if st.session_state.current_function == "Temporal Analysis":
         show_temporal_analysis()
     
@@ -107,7 +99,7 @@ def main():
     elif st.session_state.current_function == "Risk Trend Analysis":
         show_risk_trend_analysis()
 
-    # 系统信息
+    
     st.sidebar.markdown("---")
     st.sidebar.info("""
     **System Features**
@@ -119,19 +111,17 @@ def main():
     - 📊 Risk Assessment Management
     """)
 
-# =========================
-# 各功能展示函数 - 使用简单图表避免字体问题
-# =========================
+
 
 def create_simple_figure():
-    """创建简单的图表，避免字体问题"""
+    
     fig, ax = plt.subplots()
-    # 使用最基本的设置
+    
     ax.grid(True, alpha=0.3)
     return fig, ax
 
 def show_temporal_analysis():
-    """时序分析功能展示"""
+    
     col1, col2 = st.columns([2, 1])
     
     with col1:
@@ -144,7 +134,7 @@ def show_temporal_analysis():
         - Time trend visualization
         """)
         
-        # 使用简单图表
+       
         fig, ax = create_simple_figure()
         time_points = range(1, 13)
         richness = [50, 55, 52, 58, 60, 62, 65, 63, 68, 70, 72, 75]
@@ -161,7 +151,7 @@ def show_temporal_analysis():
         st.metric("Trend", "Increasing", "Positive")
 
 def show_multimodal_analysis():
-    """多模态分析功能展示"""
+    
     st.subheader("🌐 Multi-source Data Integration")
     
     col1, col2 = st.columns(2)
@@ -191,13 +181,13 @@ def show_multimodal_analysis():
         - Comprehensive metrics
         """)
         
-        # 简单的相关性矩阵
+        
         fig, ax = create_simple_figure()
         features = ['pH', 'DO', 'Temp', 'OTU1', 'OTU2', 'OTU3']
         corr_matrix = np.random.uniform(-0.8, 0.8, (6, 6))
         np.fill_diagonal(corr_matrix, 1)
         
-        # 使用seaborn但简化设置
+        
         sns.heatmap(corr_matrix, cmap='RdBu_r', center=0,
                    xticklabels=features, yticklabels=features, ax=ax,
                    cbar_kws={'shrink': 0.8})
@@ -206,7 +196,7 @@ def show_multimodal_analysis():
         st.pyplot(fig)
 
 def show_machine_learning():
-    """机器学习建模功能展示"""
+    
     st.subheader("🧠 Intelligent Prediction Models")
     
     tab1, tab2, tab3 = st.tabs(["Model Types", "Performance", "Confusion Matrix"])
@@ -240,12 +230,12 @@ def show_machine_learning():
         st.dataframe(pd.DataFrame(performance_data), use_container_width=True)
     
     with tab3:
-        # 简单的混淆矩阵
+        
         fig, ax = create_simple_figure()
         classes = ['Clean', 'Light', 'Heavy']
         cm = np.array([[25, 2, 1], [1, 28, 3], [0, 1, 29]])
         
-        # 简化热图设置
+        
         sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
                    xticklabels=classes, yticklabels=classes, ax=ax,
                    cbar_kws={'shrink': 0.8})
@@ -255,13 +245,13 @@ def show_machine_learning():
         st.pyplot(fig)
 
 def show_feature_importance():
-    """特征重要性分析功能展示"""
+   
     st.subheader("🔍 Deep Feature Analysis")
     
     col1, col2 = st.columns([3, 2])
     
     with col1:
-        # 简单的特征重要性图
+        
         fig, ax = create_simple_figure()
         features = [f'OTU_{i}' for i in range(1, 11)]
         importance = np.random.uniform(0.05, 0.2, 10)
@@ -276,7 +266,7 @@ def show_feature_importance():
         st.pyplot(fig)
     
     with col2:
-        st.markdown("""
+        
         **Analysis Methods:**
         - SHAP value analysis
         - LR coefficient weights
@@ -294,25 +284,25 @@ def show_feature_importance():
         """)
 
 def show_time_series_forecast():
-    """时间序列预测功能展示"""
+    
     st.subheader("📈 Future Trend Prediction")
     
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        # 简单的时间序列图
+       
         fig, ax = create_simple_figure()
         
-        # 历史数据
+        
         months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         history_values = np.random.normal(0.3, 0.05, 12) + np.linspace(0, 0.1, 12)
         
-        # 预测数据
+      
         future_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
         forecast_values = np.random.normal(0.4, 0.03, 6)
         
-        # 使用月份名称而不是日期对象
+       
         all_months = months + future_months
         all_values = list(history_values) + list(forecast_values)
         
@@ -320,7 +310,7 @@ def show_time_series_forecast():
         ax.plot(range(len(months), len(all_months)), forecast_values, 'r--o', label='Forecast', linewidth=2, markersize=4)
         ax.axhline(y=0.35, color='red', linestyle=':', alpha=0.7, label='Risk Threshold')
         
-        # 设置x轴标签
+        
         ax.set_xticks(range(len(all_months)))
         ax.set_xticklabels(all_months, rotation=45)
         ax.set_xlabel('Time')
@@ -349,7 +339,7 @@ def show_time_series_forecast():
         st.metric("Early Warning", "15 days", "+3 days")
 
 def show_risk_trend_analysis():
-    """风险趋势分析功能展示"""
+    
     st.subheader("⚠️ Risk Assessment & Management")
     
     col1, col2, col3 = st.columns(3)
@@ -366,7 +356,7 @@ def show_risk_trend_analysis():
         st.metric("Key Indicator", "OTU_157", "High Risk")
         st.metric("Impact Level", "High", "↑")
     
-    # 简单的风险分布图
+    
     col1, col2 = st.columns(2)
     
     with col1:
@@ -405,4 +395,5 @@ def show_risk_trend_analysis():
     """)
 
 if __name__ == "__main__":
+
     main()
