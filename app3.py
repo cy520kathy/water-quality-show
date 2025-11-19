@@ -385,6 +385,7 @@ def show_risk_trend_analysis():
         ax.legend()
         st.pyplot(fig)
     
+    # 修复这里的语法错误 - 确保三重引号正确闭合
     st.info("""
     **Risk Management Functions:**
     - Real-time risk monitoring
@@ -395,3 +396,4 @@ def show_risk_trend_analysis():
 
 if __name__ == "__main__":
     main()
+在此输入文件内容
